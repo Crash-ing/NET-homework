@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.Maui.Controls;
 using Users;
-using MAUI.Helpers;
+//using MAUI.Helpers;
 using User;
 
 public static class AppData
@@ -33,12 +33,15 @@ public partial class AddAssignment : ContentPage
 		dataStore.Assignements ??= new List<Assignement>();
 
         // Seed sample/test data into the shared AppData instance when empty
-        TestDataSeeder.SeedIfEmpty();
+        //TestDataSeeder.SeedIfEmpty();
 
 		// Bind pickers to the actual object lists so selection returns the object instances
 		cboITSupport.ItemsSource = dataStore.ITSupports;
 		cboTicket.ItemsSource = dataStore.Tickets;
-	}
+
+        cboTicket.ItemDisplayBinding = new Binding("Title");		// pickerī parāda tikai Title, nevis visu info
+		cboITSupport.ItemDisplayBinding = new Binding("UserName");	// parāda tikai vārdu
+    }
 
 	public AddAssignment(Assignement ag) : this()   // izsauc noklusēto konstruktora versiju pirms izpildes
     {
@@ -72,7 +75,11 @@ public partial class AddAssignment : ContentPage
 
         cboTicket.ItemsSource = null;
         cboTicket.ItemsSource = dataStore.Tickets;
-	}
+
+        // Re-apply ItemDisplayBinding to ensure the picker shows only Title
+        cboTicket.ItemDisplayBinding = new Binding("Title");
+		cboITSupport.ItemDisplayBinding = new Binding("UserName");
+    }
 
 	private async void BtnAddAssignment_Clicked(object sender, EventArgs e)
 	{

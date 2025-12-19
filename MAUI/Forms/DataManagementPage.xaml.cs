@@ -5,10 +5,11 @@ using MAUI.Forms.AddItemsForms; // make AppData visible
 public partial class DataManagementPage : ContentPage
 {
     private IDataManager dm;
+    private readonly string path = @"..\..\data.txt"; // Move path to a field
+
     public DataManagementPage()
 	{
 		InitializeComponent();
-        string path = @"..\..\data.txt";
         dm = new User.FigureXMLDataManager(path);   // Izveido IDataManager interfeisa objektu, izmantojot FigureXMLDataManager klasi
 
         // Ensure the XML manager uses the shared in-memory DataStore used by MAUI pages.
@@ -33,12 +34,12 @@ public partial class DataManagementPage : ContentPage
 
     private void btnSave_Clicked(object sender, EventArgs e)
     {
-        dm.Save();      // Izsauc Save metodi, lai saglabātu datus
+        dm.Save(path);      // Izsauc Save metodi, lai saglabātu datus
     }
 
     private void btnLoad_Clicked(object sender, EventArgs e)
     {
-        dm.Load();      // Izsauc Load metodi, lai ielādētu datus
+        dm.Load(path);      // Pass path to Load method
         lblData.Text = dm.Print();
     }
 

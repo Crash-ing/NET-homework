@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 using Users;
+using System.IO;
 
 // interfeisa implementācija
 
@@ -70,10 +71,54 @@ namespace User
             }
 
             var serializer = new XmlSerializer(typeof(DataStore));
-
-            using (var fs = new FileStream(path, FileMode.Open))   // Izmanto FileStream, lai lasītu no faila
+            DataStore? loaded;
+            using (var fs = new FileStream(path, FileMode.Open))
             {
-                Store = (DataStore)serializer.Deserialize(fs);   // nolasīto XML pārvērš atpakaļ DataStore objektā
+                loaded = (DataStore?)serializer.Deserialize(fs);
+            }
+
+            if (loaded == null)
+            {
+                Console.WriteLine("Failed to deserialize data.");
+                return;
+            }
+
+            // Ensure Store exists and merge into the existing instance (preserve reference)
+            Store ??= new DataStore();
+
+            Store.Employees ??= new List<Employee>();
+            Store.ITSupports ??= new List<ITSupport>();
+            Store.Tickets ??= new List<Ticket>();
+            Store.Assignements ??= new List<Assignement>();
+
+            Store.Employees.Clear();
+            Store.Employees.AddRange(loaded.Employees ?? Enumerable.Empty<Employee>());
+
+            Store.ITSupports.Clear();
+            Store.ITSupports.AddRange(loaded.ITSupports ?? Enumerable.Empty<ITSupport>());
+
+            Store.Tickets.Clear();
+            Store.Tickets.AddRange(loaded.Tickets ?? Enumerable.Empty<Ticket>());
+
+            Store.Assignements.Clear();
+            Store.Assignements.AddRange(loaded.Assignements ?? Enumerable.Empty<Assignement>());
+
+            // Re-link Assignement.Support and Assignement.Ticket to the instances in Store lists
+            foreach (var a in Store.Assignements)
+            {
+                if (a.Support != null)
+                {
+                    var matched = Store.ITSupports.FirstOrDefault(s => s.UserID == a.Support.UserID);
+                    if (matched != null)
+                        a.Support = matched;
+                }
+
+                if (a.Ticket != null)
+                {
+                    var matchedT = Store.Tickets.FirstOrDefault(t => t.TicketId == a.Ticket.TicketId);
+                    if (matchedT != null)
+                        a.Ticket = matchedT;
+                }
             }
 
             Console.WriteLine($"Dati ielādēti no: {path}");
@@ -89,7 +134,7 @@ namespace User
                 ContractDate = new DateTime(2020, 5, 1)
             });
 
-            Store.ITSupports.Add(new ITSupport("Zane", "zanegraav@gmail.com", 2, true, SpecializationType.Network));
+            Store.ITSupports.Add(new ITSupport("Zane Grāvelsiņa", "zanegraav@gmail.com", 2, true, SpecializationType.Network));
 
             Store.Tickets.Add(new Ticket
             {
@@ -108,12 +153,23 @@ namespace User
                 Support = Store.ITSupports[0],
                 Ticket = Store.Tickets[0],
                 Comment = "Sākotnējais pienākums — tīkla speciālists."
-
             });
         }
+
         public void reset()
         {
-            Store = new DataStore();
+            // if Store is shared (AppData.Instance), keep same instance but clear lists so all pages see reset
+            if (Store != null)
+            {
+                Store.Employees?.Clear();
+                Store.ITSupports?.Clear();
+                Store.Tickets?.Clear();
+                Store.Assignements?.Clear();
+            }
+            else
+            {
+                Store = new DataStore();
+            }
         }
 
         public void Add(Assignement assignement)

@@ -9,8 +9,8 @@ namespace User
     public interface IDataManager
     {
         string Print();
-        void Save(string path = null);
-        void Load(string path = null);
+        void Save(string path);
+        void Load(string path);
         void createTestData();
         void reset();
     }
