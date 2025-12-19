@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MAUI.Forms.AddItemsForms.AddAssignment"
+             Title="AddAssignment">
+    <VerticalStackLayout>
+        <Label
+            Text="Create an assignment!"
+            VerticalOptions="Center"
+            HorizontalOptions="Center"/>
+        <HorizontalStackLayout>
+            <Label Text="Choose which ITSupport you want to assign: "></Label>
+            <Picker x:Name="cboITSupport"></Picker>
+        </HorizontalStackLayout>
+        <HorizontalStackLayout>
+            <Label Text="Choose correcsponding ticket: "></Label>
+            <Picker x:Name="cboTicket"></Picker>
+        </HorizontalStackLayout>
+        <HorizontalStackLayout>
+            <Label Text="Comment: "></Label>
+            <Entry x:Name="txtComment" Text=""></Entry>
+        </HorizontalStackLayout>
+        <Button x:Name="btnAdd" Text="Add Assignment" Clicked="BtnAddAssignment_Clicked"></Button>
+    </VerticalStackLayout>
+</ContentPage>
