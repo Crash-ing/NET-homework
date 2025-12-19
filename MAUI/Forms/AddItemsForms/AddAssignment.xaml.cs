@@ -4,14 +4,11 @@ using System;
 using System.Collections.Generic;
 using Microsoft.Maui.Controls;
 using Users;
-//using MAUI.Helpers;
 using User;
 
-public static class AppData
+public static class AppData		// klase datu glabāšanai starp lapām
 {
-    // Shared DataStore instance used across the app.
-    // Other pages should use AppData.Instance to add/read test data.
-    public static DataStore Instance { get; set; } = new DataStore();
+	public static DataStore Instance { get; set; } = new DataStore();
 }
 
 public partial class AddAssignment : ContentPage
@@ -24,20 +21,10 @@ public partial class AddAssignment : ContentPage
 	{
 		InitializeComponent();
 
-		// Use the shared instance so test data created elsewhere is visible here
-		dataStore = AppData.Instance;
+		dataStore = AppData.Instance;	// datu glabātājs
 
-        // Ensure collections are initialized
-        //dataStore.ITSupports ??= new List<ITSupport>();
-		//dataStore.Tickets ??= new List<Ticket>();
-		//dataStore.Assignements ??= new List<Assignement>();
-
-        // Seed sample/test data into the shared AppData instance when empty
-        //TestDataSeeder.SeedIfEmpty();
-
-		// Bind pickers to the actual object lists so selection returns the object instances
-		cboITSupport.ItemsSource = dataStore.ITSupports;
-		cboTicket.ItemsSource = dataStore.Tickets;
+        cboITSupport.ItemsSource = dataStore.ITSupports;    // izvēlas pickeru datu avotus
+        cboTicket.ItemsSource = dataStore.Tickets;
 
         cboTicket.ItemDisplayBinding = new Binding("Title");		// pickerī parāda tikai Title, nevis visu info
 		cboITSupport.ItemDisplayBinding = new Binding("UserName");	// parāda tikai vārdu
@@ -56,30 +43,6 @@ public partial class AddAssignment : ContentPage
 		txtComment.Text = ag.Comment ?? string.Empty;
 		btnAdd.Text = "Update Assignment";
 	}
-
-	//protected override void OnAppearing()
-	//{
-	//	base.OnAppearing();
-
- //       // Refresh the reference in case other pages replaced collections or added items
- //       dataStore = AppData.Instance;
-
- //       // Ensure collections are initialized
- //       dataStore.ITSupports ??= new List<ITSupport>();
-	//	dataStore.Tickets ??= new List<Ticket>();
-	//	dataStore.Assignements ??= new List<Assignement>();
-
- //       // Reset and rebind ItemsSource so new test data shows up when coming back to this page
- //       cboITSupport.ItemsSource = null;
- //       cboITSupport.ItemsSource = dataStore.ITSupports;
-
- //       cboTicket.ItemsSource = null;
- //       cboTicket.ItemsSource = dataStore.Tickets;
-
- //       // Re-apply ItemDisplayBinding to ensure the picker shows only Title
- //       cboTicket.ItemDisplayBinding = new Binding("Title");
-	//	cboITSupport.ItemDisplayBinding = new Binding("UserName");
- //   }
 
 	private async void BtnAddAssignment_Clicked(object sender, EventArgs e)
 	{

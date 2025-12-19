@@ -2,11 +2,40 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MAUI.Forms.AddItemsForms.AddTicket"
-             Title="AddTicket">
-    <VerticalStackLayout>
+             Title="Add Ticket">
+    <VerticalStackLayout Margin="20">
         <Label 
-            Text="Welcome to .NET MAUI!"
+            Text="Open a ticket!"
             VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+            HorizontalOptions="Center"/>
+        <HorizontalStackLayout Margin="10">
+            <Label Text="Title: "></Label>
+            <Entry x:Name="txtTitle" Placeholder="Enter a title!"></Entry>
+        </HorizontalStackLayout>
+        <HorizontalStackLayout Margin="10">
+            <Label Text="Description: "></Label>
+            <Entry x:Name="txtDescription" Placeholder="Enter a description!"></Entry>
+        </HorizontalStackLayout>
+        <HorizontalStackLayout Margin="10">
+            <Label Text="Priority: "></Label>
+            <Stepper x:Name="sdrPriority" Minimum="1" Maximum="100" Increment="1"></Stepper>
+        </HorizontalStackLayout>
+        <HorizontalStackLayout Margin="10">
+            <Label Text="Ticket ID: "></Label>
+            <Entry x:Name="txtID" Placeholder="Enter a TicketID!"></Entry>
+        </HorizontalStackLayout>
+        <HorizontalStackLayout Margin="10">
+            <Label Text="Created by: "></Label>
+            <Picker x:Name="cboEmployee"></Picker>
+        </HorizontalStackLayout>
+        <HorizontalStackLayout Margin="10">
+            <Label Text="Ticket Status: "></Label>
+            <Picker x:Name="cboTicketStat"></Picker>
+        </HorizontalStackLayout>
+        <HorizontalStackLayout Margin="10">
+            <Label Text="Resolved? "></Label>
+            <CheckBox x:Name="boxResolved" IsChecked="False"></CheckBox>
+        </HorizontalStackLayout>
+        <Button x:Name="btnAddTicket" Text="Add Ticket" Clicked="BtnAddTicket_Clicked"></Button>
     </VerticalStackLayout>
 </ContentPage>

@@ -3,20 +3,20 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MAUI.Forms.AddItemsForms.AddAssignment"
              Title="AddAssignment">
-    <VerticalStackLayout>
+    <VerticalStackLayout Margin="20">
         <Label
             Text="Create an assignment!"
             VerticalOptions="Center"
             HorizontalOptions="Center"/>
-        <HorizontalStackLayout>
+        <HorizontalStackLayout Margin="10">
             <Label Text="Choose which ITSupport you want to assign: "></Label>
             <Picker x:Name="cboITSupport"></Picker>
         </HorizontalStackLayout>
-        <HorizontalStackLayout>
+        <HorizontalStackLayout Margin="10">
             <Label Text="Choose correcsponding ticket: "></Label>
             <Picker x:Name="cboTicket"></Picker>
         </HorizontalStackLayout>
-        <HorizontalStackLayout>
+        <HorizontalStackLayout Margin="10">
             <Label Text="Comment: "></Label>
             <Entry x:Name="txtComment" Text=""></Entry>
         </HorizontalStackLayout>
