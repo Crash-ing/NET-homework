@@ -1,5 +1,6 @@
 ﻿namespace MAUI.Forms;
 using User;
+using MAUI.Forms.AddItemsForms; // make AppData visible
 
 public partial class DataManagementPage : ContentPage
 {
@@ -9,6 +10,13 @@ public partial class DataManagementPage : ContentPage
 		InitializeComponent();
         string path = @"..\..\data.txt";
         dm = new User.FigureXMLDataManager(path);   // Izveido IDataManager interfeisa objektu, izmantojot FigureXMLDataManager klasi
+
+        // Ensure the XML manager uses the shared in-memory DataStore used by MAUI pages.
+        // IDataManager does not expose Store, so cast to concrete type before assigning.
+        if (dm is User.FigureXMLDataManager xmlDm)
+        {
+            xmlDm.Store = AppData.Instance;
+        }
     }
 
     private void btnTestData_Clicked(object sender, EventArgs e)
