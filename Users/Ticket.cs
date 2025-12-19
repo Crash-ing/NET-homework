@@ -26,7 +26,7 @@ namespace User
 
         public override string? ToString()  // Pārdefinēta metode ToString(), lai atgrieztu visu īpašību vērtības kā tekstu
         {
-            return base.ToString() + " Title: " + Title + " Description: " + Description + " Priority: " + Priority + " TicketId: " + TicketId + " CreatedBy: " + CreatedBy + " Status: " + Status + " IsResolved: " + IsResolved;
+            return $"Title: {Title}; Description: {Description}; Priority: {Priority}; TicketId: {TicketId}; CreatedBy: {CreatedBy}; Status: {Status}; IsResolved: {IsResolved};";
         }   
     }
 }

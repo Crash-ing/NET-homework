@@ -12,7 +12,7 @@ namespace Users
 
         public override string? ToString()  // Pārdefinēta metode ToString(), lai atgrieztu visu īpašību vērtības kā tekstu
         {
-            return base.ToString() + " Contract Date: " + ContractDate ;
+            return base.ToString() + " Contract Date: " + ContractDate + ";";
         }
     }
 }

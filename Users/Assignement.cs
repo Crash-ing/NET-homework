@@ -15,7 +15,7 @@ namespace User
         public string? Comment { get; set; }      // nullable comment
         public override string? ToString()  // Pārdefinēta metode ToString(), lai atgrieztu visu īpašību vērtības kā tekstu
         {
-            return base.ToString() + " AssignedAt: " + AssignedAt + " Support: " + (Support?.ToString() ?? "<null>") + " Ticket: " + (Ticket?.ToString() ?? "<null>") + " Comment: " + (Comment ?? "<null>");
+            return $"AssignedAt: {AssignedAt}; Support: {Support?.ToString() ?? "<null>"}; Ticket: {Ticket?.ToString() ?? "<null>"}; Comment: {Comment ?? "<null>"}; ";
         }
     }
 }

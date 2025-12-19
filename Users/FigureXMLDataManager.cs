@@ -15,6 +15,11 @@ namespace User
         private readonly string _path;      // noklusētais ceļš saglabāšanai/ielādei
         public DataStore Store { get; set; } = new();
 
+        public FigureXMLDataManager()
+        {
+            Store = new DataStore();
+        }
+
         public FigureXMLDataManager(string path)
         {
             _path = path;

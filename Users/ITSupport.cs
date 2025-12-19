@@ -31,7 +31,7 @@ namespace Users
 
         public override string? ToString()  // Pārdefinēta metode ToString(), lai atgrieztu visu īpašību vērtības kā tekstu
         {
-            return base.ToString() + " Specialization: " + Specialization;
+            return base.ToString() + "Specialization: "  + Specialization + ";";
         }
     }
 }

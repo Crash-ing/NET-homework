@@ -36,9 +36,9 @@ namespace Users
 
         public bool IsActive { get; set; }
 
-        public override string? ToString()  // Pārdefinēta metode ToString(), lai atgrieztu visu īpašību vērtības kā tekstu
+        public override string? ToString()
         {
-            return base.ToString() + " UserName: " + UserName + " Email: " + Email + " UserID: " + UserID + " IsActive: " + IsActive;
+            return $"Username: {UserName}; Email: {Email}; UserID: {UserID}; IsActive: {IsActive}; ";
         }
     }
 }
