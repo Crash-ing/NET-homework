@@ -138,7 +138,7 @@ namespace User
                 Priority = 2,
                 CreatedBy = Store.Employees[0],
                 Status = TicketStatus.Open,
-                IsResolved = false
+                IsResolved = "Open"
             });
 
             Store.Assignements.Add(new Assignement

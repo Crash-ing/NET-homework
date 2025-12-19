@@ -22,7 +22,7 @@ namespace User
         public int TicketId { get; set; }
         public Employee CreatedBy { get; set; }
         public TicketStatus Status { get; set; }
-        public bool IsResolved { get; set; }
+        public string IsResolved { get; set; }
 
         public override string? ToString()  // Pārdefinēta metode ToString(), lai atgrieztu visu īpašību vērtības kā tekstu
         {

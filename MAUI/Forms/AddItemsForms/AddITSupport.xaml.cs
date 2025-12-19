@@ -22,7 +22,7 @@ public partial class AddITSupport : ContentPage
     public AddITSupport(ITSupport its) : this()
     {
         _its = its;
-        cboEmployee.SelectedItem = its.UserName;
+        cboEmployee.SelectedItem = its.EmployeeRef;
         cboSpecialization.SelectedItem = its.Specialization;
         btnAddITSupport.Text = "Update IT Support";
     }
@@ -30,22 +30,21 @@ public partial class AddITSupport : ContentPage
     private async void BtnAddITSupport_Clicked(object sender, EventArgs e)
     {
         var selectedEmployee = cboEmployee.SelectedItem as Employee;
-        var selectedSpecialization = (SpecializationType)cboSpecialization.SelectedIndex;
+        var selectedSpecialization = (SpecializationType)cboSpecialization.SelectedItem;
 
         if (_its == null)
         {
-            var newITSupport = new ITSupport
-            {
-                UserName = selectedEmployee,
-                Specialization = selectedSpecialization
-            };
-
+            var newITSupport = new ITSupport(selectedEmployee, selectedSpecialization);
             dataStore.ITSupports.Add(newITSupport);
             await DisplayAlert("Success", "IT Support added successfully.", "OK");
         }
         else
         {
-            _its.UserName = selectedEmployee;
+            _its.EmployeeRef = selectedEmployee;
+            _its.UserName = selectedEmployee.UserName;
+            _its.Email = selectedEmployee.Email;
+            _its.UserID = selectedEmployee.UserID;
+            _its.IsActive = selectedEmployee.IsActive;
             _its.Specialization = selectedSpecialization;
             await DisplayAlert("Success", "IT Support updated successfully.", "OK");
         }
