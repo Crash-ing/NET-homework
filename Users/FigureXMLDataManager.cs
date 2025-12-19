@@ -70,8 +70,8 @@ namespace User
                 return;
             }
 
-            var serializer = new XmlSerializer(typeof(DataStore));
-            DataStore? loaded;
+            var serializer = new XmlSerializer(typeof(DataStore));  // Izveido XML serializatoru priekš DataStore objekta
+            DataStore? loaded;      // pagaidu mainīgais priekš ielādētā DataStore objekta
             using (var fs = new FileStream(path, FileMode.Open))
             {
                 loaded = (DataStore?)serializer.Deserialize(fs);
@@ -83,24 +83,18 @@ namespace User
                 return;
             }
 
-            // Ensure Store exists and merge into the existing instance (preserve reference)
+            // pārvieto datus no ielādētā objekta uz esošo Store objektu
             Store ??= new DataStore();
 
+            //nodrošina, ka saraksti nav null
             Store.Employees ??= new List<Employee>();
             Store.ITSupports ??= new List<ITSupport>();
             Store.Tickets ??= new List<Ticket>();
             Store.Assignements ??= new List<Assignement>();
 
-            Store.Employees.Clear();
-            Store.Employees.AddRange(loaded.Employees ?? Enumerable.Empty<Employee>());
-
-            Store.ITSupports.Clear();
+            Store.Employees.AddRange(loaded.Employees ?? Enumerable.Empty<Employee>());     // pievieno ielādētos datus esošajiem sarakstiem
             Store.ITSupports.AddRange(loaded.ITSupports ?? Enumerable.Empty<ITSupport>());
-
-            Store.Tickets.Clear();
             Store.Tickets.AddRange(loaded.Tickets ?? Enumerable.Empty<Ticket>());
-
-            Store.Assignements.Clear();
             Store.Assignements.AddRange(loaded.Assignements ?? Enumerable.Empty<Assignement>());
 
             // Re-link Assignement.Support and Assignement.Ticket to the instances in Store lists

@@ -9,24 +9,13 @@
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
         <HorizontalStackLayout>
-            <Label Text="UserID: "></Label>
-            <Entry x:Name="txtUserIDEntry" Placeholder="Enter UserID"></Entry>
-        </HorizontalStackLayout>
-        <HorizontalStackLayout>
-            <Label Text="Email: "></Label>
-            <Entry x:Name="txtEmailEntry" Placeholder="Enter Email"></Entry>
-        </HorizontalStackLayout>
-        <HorizontalStackLayout>
-            <Label Text="Username: "></Label>
-            <Entry x:Name="txtUsernameEntry" Placeholder="Enter Username"></Entry>
-        </HorizontalStackLayout>
-        <HorizontalStackLayout>
-            <Label Text="Is active? "></Label>
-            <Picker x:Name="cboIsActive"></Picker>
+            <Label Text="Select Employee: "></Label>
+            <Picker x:Name="cboEmployee"></Picker>
         </HorizontalStackLayout>
         <HorizontalStackLayout>
             <Label Text="Specialization: "></Label>
             <Picker x:Name="cboSpecialization"></Picker>
         </HorizontalStackLayout>
+        <Button x:Name="btnAddITSupport" Text="Add ITSupport" Clicked="BtnAddITSupport_Clicked"></Button>
     </VerticalStackLayout>
 </ContentPage>

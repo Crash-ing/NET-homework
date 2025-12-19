@@ -28,9 +28,9 @@ public partial class AddAssignment : ContentPage
 		dataStore = AppData.Instance;
 
         // Ensure collections are initialized
-        dataStore.ITSupports ??= new List<ITSupport>();
-		dataStore.Tickets ??= new List<Ticket>();
-		dataStore.Assignements ??= new List<Assignement>();
+        //dataStore.ITSupports ??= new List<ITSupport>();
+		//dataStore.Tickets ??= new List<Ticket>();
+		//dataStore.Assignements ??= new List<Assignement>();
 
         // Seed sample/test data into the shared AppData instance when empty
         //TestDataSeeder.SeedIfEmpty();
@@ -42,7 +42,7 @@ public partial class AddAssignment : ContentPage
         cboTicket.ItemDisplayBinding = new Binding("Title");		// pickerī parāda tikai Title, nevis visu info
 		cboITSupport.ItemDisplayBinding = new Binding("UserName");	// parāda tikai vārdu
     }
-
+	
 	public AddAssignment(Assignement ag) : this()   // izsauc noklusēto konstruktora versiju pirms izpildes
     {
 		_ag = ag;
@@ -57,29 +57,29 @@ public partial class AddAssignment : ContentPage
 		btnAdd.Text = "Update Assignment";
 	}
 
-	protected override void OnAppearing()
-	{
-		base.OnAppearing();
+	//protected override void OnAppearing()
+	//{
+	//	base.OnAppearing();
 
-        // Refresh the reference in case other pages replaced collections or added items
-        dataStore = AppData.Instance;
+ //       // Refresh the reference in case other pages replaced collections or added items
+ //       dataStore = AppData.Instance;
 
-        // Ensure collections are initialized
-        dataStore.ITSupports ??= new List<ITSupport>();
-		dataStore.Tickets ??= new List<Ticket>();
-		dataStore.Assignements ??= new List<Assignement>();
+ //       // Ensure collections are initialized
+ //       dataStore.ITSupports ??= new List<ITSupport>();
+	//	dataStore.Tickets ??= new List<Ticket>();
+	//	dataStore.Assignements ??= new List<Assignement>();
 
-        // Reset and rebind ItemsSource so new test data shows up when coming back to this page
-        cboITSupport.ItemsSource = null;
-        cboITSupport.ItemsSource = dataStore.ITSupports;
+ //       // Reset and rebind ItemsSource so new test data shows up when coming back to this page
+ //       cboITSupport.ItemsSource = null;
+ //       cboITSupport.ItemsSource = dataStore.ITSupports;
 
-        cboTicket.ItemsSource = null;
-        cboTicket.ItemsSource = dataStore.Tickets;
+ //       cboTicket.ItemsSource = null;
+ //       cboTicket.ItemsSource = dataStore.Tickets;
 
-        // Re-apply ItemDisplayBinding to ensure the picker shows only Title
-        cboTicket.ItemDisplayBinding = new Binding("Title");
-		cboITSupport.ItemDisplayBinding = new Binding("UserName");
-    }
+ //       // Re-apply ItemDisplayBinding to ensure the picker shows only Title
+ //       cboTicket.ItemDisplayBinding = new Binding("Title");
+	//	cboITSupport.ItemDisplayBinding = new Binding("UserName");
+ //   }
 
 	private async void BtnAddAssignment_Clicked(object sender, EventArgs e)
 	{
@@ -111,6 +111,5 @@ public partial class AddAssignment : ContentPage
 			await DisplayAlert("Success", "Assignment updated.", "OK");
 		}
 		await Navigation.PopAsync();
-		
 	}
 }
