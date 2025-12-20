@@ -20,8 +20,8 @@
         Route="AddItemsPage" />
 
     <!-- Item List (priekš rediģēšanas un dzēšanas) -->
-    <!-- <ShellContent
+    <ShellContent
         Title="Item List"
         ContentTemplate="{DataTemplate forms:ItemListPage}"
-        Route="ItemListPage" /> -->
+        Route="ItemListPage" />
 </Shell>
