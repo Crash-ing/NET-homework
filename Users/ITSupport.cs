@@ -16,6 +16,7 @@ namespace Users
 
     public class ITSupport : User
     {
+        public int ID { get; set; }
         public SpecializationType Specialization { get; set; }
 
         public Employee? EmployeeRef { get; set; }  // atsauce uz saistīto darbinieku objektu

@@ -6,39 +6,34 @@ using Microsoft.Maui.Controls;
 using Users;
 using User;
 
-public static class AppData		// klase datu glabāšanai starp lapām
-{
-	public static DataStore Instance { get; set; } = new DataStore();
-}
-
 public partial class AddAssignment : ContentPage
 {
-	private DataStore dataStore;
+	private ObjectAddManager obj;
 
 	private Assignement _ag = null; // ja ir null, tad jauns ieraksts, ja nav - labojam esošo
 
-    public AddAssignment()
+	public AddAssignment()
 	{
 		InitializeComponent();
 
-		dataStore = AppData.Instance;	// datu glabātājs
+		obj = AppData.Instance.oam; // datu glabātājs
 
-        cboITSupport.ItemsSource = dataStore.ITSupports;    // izvēlas pickeru datu avotus
-        cboTicket.ItemsSource = dataStore.Tickets;
+		cboITSupport.ItemsSource = obj.uc.ITSupports.ToList();    // izvēlas pickeru datu avotus
+		cboTicket.ItemsSource = obj.uc.Tickets.ToList();
 
-        cboTicket.ItemDisplayBinding = new Binding("Title");		// pickerī parāda tikai Title, nevis visu info
-		cboITSupport.ItemDisplayBinding = new Binding("UserName");	// parāda tikai vārdu
-    }
-	
+		cboTicket.ItemDisplayBinding = new Binding("Title");        // pickerī parāda tikai Title, nevis visu info
+		cboITSupport.ItemDisplayBinding = new Binding("UserName");  // parāda tikai vārdu
+	}
+
 	public AddAssignment(Assignement ag) : this()   // izsauc noklusēto konstruktora versiju pirms izpildes
-    {
+	{
 		_ag = ag;
 
 		if (ag == null) // ja nav padots ieraksts, tad iziet
-            return;
+			return;
 
-        // aizpilda laukus ar esošā ieraksta datiem
-        cboITSupport.SelectedItem = ag.Support;
+		// aizpilda laukus ar esošā ieraksta datiem
+		cboITSupport.SelectedItem = ag.Support;
 		cboTicket.SelectedItem = ag.Ticket;
 		txtComment.Text = ag.Comment ?? string.Empty;
 		btnAdd.Text = "Update Assignment";
@@ -46,13 +41,13 @@ public partial class AddAssignment : ContentPage
 
 	private async void BtnAddAssignment_Clicked(object sender, EventArgs e)
 	{
-        // paņem izvēlētos objektus no pickeriem
-        var selectedSupport = cboITSupport.SelectedItem as ITSupport;
+		// paņem izvēlētos objektus no pickeriem
+		var selectedSupport = cboITSupport.SelectedItem as ITSupport;
 		var selectedTicket = cboTicket.SelectedItem as Ticket;
 		var comment = txtComment.Text?.Trim() ?? string.Empty;
 
 		if (_ag == null)    // jauns ieraksts
-        {
+		{
 			var newAssignment = new Assignement
 			{
 				AssignedAt = DateTime.Now,
@@ -61,11 +56,11 @@ public partial class AddAssignment : ContentPage
 				Comment = comment
 			};
 
-			dataStore.Assignements.Add(newAssignment);  // pievieno sarakstam
-            await DisplayAlert("Success", "Assignment added.", "OK");
+			obj.uc.Add(newAssignment);  // pievieno sarakstam
+			await DisplayAlert("Success", "Assignment added.", "OK");
 		}
-        else    // labo esošo ierakstu
-        {
+		else    // labo esošo ierakstu
+		{
 			_ag.AssignedAt = DateTime.Now;
 			_ag.Support = selectedSupport;
 			_ag.Ticket = selectedTicket;
@@ -73,6 +68,8 @@ public partial class AddAssignment : ContentPage
 
 			await DisplayAlert("Success", "Assignment updated.", "OK");
 		}
-		await Navigation.PopAsync();
+		obj.Save(); // saglabā izmaiņas datu glabātājā
+        await Navigation.PopAsync();
 	}
+
 }

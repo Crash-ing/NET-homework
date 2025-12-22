@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "User", "Users\User.csproj",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MAUI", "MAUI\MAUI.csproj", "{9274D8AE-A741-45C3-9087-0051D20F14F9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MD3_DB", "MD3_DB\MD3_DB.csproj", "{170B3254-C4B8-4F7B-92F9-E88F9FABCFD3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{9274D8AE-A741-45C3-9087-0051D20F14F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9274D8AE-A741-45C3-9087-0051D20F14F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9274D8AE-A741-45C3-9087-0051D20F14F9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{170B3254-C4B8-4F7B-92F9-E88F9FABCFD3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{170B3254-C4B8-4F7B-92F9-E88F9FABCFD3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{170B3254-C4B8-4F7B-92F9-E88F9FABCFD3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{170B3254-C4B8-4F7B-92F9-E88F9FABCFD3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -4,13 +4,13 @@ using User;
 
 public partial class AddTicket : ContentPage
 {
-	private DataStore dataStore;
+	private ObjectAddManager obj;
 	private Ticket _tick = null;
 	public AddTicket()
 	{
 		InitializeComponent();
-		dataStore = AppData.Instance;
-		cboEmployee.ItemsSource = dataStore.Employees;
+		obj = AppData.Instance.oam;
+		cboEmployee.ItemsSource = obj.uc.Employees.ToList();
 		cboTicketStat.ItemsSource = Enum.GetValues(typeof(TicketStatus));
 
 		cboEmployee.ItemDisplayBinding = new Binding("UserName");
@@ -51,7 +51,7 @@ public partial class AddTicket : ContentPage
 				Status = selectedStatus,
 				IsResolved = isResolved
 			};
-			dataStore.Tickets.Add(newTicket);
+			obj.uc.Add(newTicket);
 			await DisplayAlert("Success", "Ticket added successfully.", "OK");
         }
 		else

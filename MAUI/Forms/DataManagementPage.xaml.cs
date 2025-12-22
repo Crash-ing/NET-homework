@@ -10,14 +10,7 @@ public partial class DataManagementPage : ContentPage
     public DataManagementPage()
 	{
 		InitializeComponent();
-        dm = new User.FigureXMLDataManager(path);   // Izveido IDataManager interfeisa objektu, izmantojot FigureXMLDataManager klasi
-
-        // Ensure the XML manager uses the shared in-memory DataStore used by MAUI pages.
-        // IDataManager does not expose Store, so cast to concrete type before assigning.
-        if (dm is User.FigureXMLDataManager xmlDm)
-        {
-            xmlDm.Store = AppData.Instance;
-        }
+        dm = AppData.Instance; // Inicilizē datu pārvaldnieku no AppData
     }
 
     private void btnTestData_Clicked(object sender, EventArgs e)
@@ -28,18 +21,26 @@ public partial class DataManagementPage : ContentPage
 
     private void btnReset_Clicked(object sender, EventArgs e)
     {
-        dm.reset();     // Izsauc reset metodi, lai notīrītu datus
-        lblData.Text = dm.Print();
+        // Commented out the reset functionality per request:
+        dm.reset();
+        dm.Save(null);
+
+        // Clear only the screen:
+        //lblData.Text = string.Empty;
     }
 
     private void btnSave_Clicked(object sender, EventArgs e)
     {
-        dm.Save(path);      // Izsauc Save metodi, lai saglabātu datus
+        // Save to DB (path is unused in DBDataManager, but we pass null to respect signature)
+        dm.Save(null);
     }
 
     private void btnLoad_Clicked(object sender, EventArgs e)
     {
-        dm.Load(path);      // Pass path to Load method
+        // Load saved data from DB
+        dm.Load(null);
+
+        // Show loaded data
         lblData.Text = dm.Print();
     }
 
@@ -50,6 +51,15 @@ public partial class DataManagementPage : ContentPage
 
     private void ContentPage_NavigatedTo(object sender, NavigatedToEventArgs e)
     {
-        lblData.Text = dm.Print();  // Parāda datus, kad lapa tiek ielādēta
+        // Show current data when page loads/navigates to
+        lblData.Text = dm.Print();
+    }
+
+    // If you have any other wired load handler, keep it consistent:
+    private async void OnLoadClicked(object sender, EventArgs e)
+    {
+        dm.Load(null);
+        lblData.Text = dm.Print();
+        // MessagingCenter.Send(this, "DataReloaded"); // if you use it elsewhere
     }
 }

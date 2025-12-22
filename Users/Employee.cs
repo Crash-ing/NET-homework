@@ -8,6 +8,7 @@ namespace Users
 {
     public class Employee : User
     {
+        public int ID { get; set; }
         public DateTime ContractDate { get; set; }
 
         public override string? ToString()  // Pārdefinēta metode ToString(), lai atgrieztu visu īpašību vērtības kā tekstu
