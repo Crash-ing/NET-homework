@@ -22,7 +22,7 @@ public partial class AddTicket : ContentPage
 		txtTitle.Text = _tick.Title;
 		txtDescription.Text = tick.Description;
 		sdrPriority.Value = tick.Priority;
-		txtID.Text = tick.TicketId.ToString();
+		// txtID.Text = tick.TicketId.ToString();
         cboEmployee.SelectedItem = tick.CreatedBy;
 		cboTicketStat.SelectedItem = tick.Status;
 		boxResolved.IsChecked = tick.IsResolved;
@@ -34,10 +34,15 @@ public partial class AddTicket : ContentPage
 		var title = txtTitle.Text?.Trim() ?? string.Empty;
 		var description = txtDescription.Text?.Trim() ?? string.Empty;
 		var priority = (int)sdrPriority.Value;
-		var ticketId = _tick?.TicketId ?? 0;
+		// var ticketId = _tick?.TicketId ?? 0;
 		var selectedEmployee = cboEmployee.SelectedItem as Employee;
 		var selectedStatus = (TicketStatus)cboTicketStat.SelectedItem;
 		var isResolved = boxResolved.IsChecked;
+
+        // Auto-assign TicketId on create; keep existing on update
+        int ticketId = _tick == null
+            ? (obj.uc.Tickets.Any() ? obj.uc.Tickets.Max(t => t.TicketId) + 1 : 1)
+            : _tick.TicketId;
 
         if (_tick == null)
         {
@@ -65,6 +70,7 @@ public partial class AddTicket : ContentPage
 			_tick.IsResolved = isResolved;
 			await DisplayAlert("Success", "Ticket updated successfully.", "OK");
         }
+		obj.Save();
 		await Navigation.PopAsync();
     }
 }

@@ -23,10 +23,10 @@ public partial class DataManagementPage : ContentPage
     {
         // Commented out the reset functionality per request:
         dm.reset();
-        dm.Save(null);
+
 
         // Clear only the screen:
-        //lblData.Text = string.Empty;
+        lblData.Text = string.Empty;
     }
 
     private void btnSave_Clicked(object sender, EventArgs e)
