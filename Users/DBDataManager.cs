@@ -45,7 +45,7 @@ namespace User
             var itSupport = new ITSupport(danielsEmployee, SpecializationType.Network);
             uc.ITSupports.Add(itSupport);
 
-            uc.ITSupports.Add(new ITSupport("Zane", "zanegraav@gmail.com", 2, true, SpecializationType.Network));
+            uc.ITSupports.Add(new ITSupport("Zane", "zanegraav@gmail.com", 3, true, SpecializationType.Network));
 
             var ticket = new Ticket
             {
@@ -75,16 +75,20 @@ namespace User
             var result = new StringBuilder();
 
             result.AppendLine("=== EMPLOYEES ===");
-            foreach (var e in uc.Employees) result.AppendLine(e.ToString());
+            foreach (var e in uc.Employees)
+                result.AppendLine($"Name: {e.UserName}, Email: {e.Email}, Active: {e.IsActive}, Contract: {e.ContractDate:d}");
 
             result.AppendLine("=== SUPPORTS ===");
-            foreach (var s in uc.ITSupports) result.AppendLine(s.ToString());
+            foreach (var s in uc.ITSupports)
+                result.AppendLine($"{s.UserName}, Email: {s.Email}, Active: {s.IsActive}, Specialization: {s.Specialization}");
 
             result.AppendLine("=== TICKETS ===");
-            foreach (var t in uc.Tickets) result.AppendLine(t.ToString());
+            foreach (var t in uc.Tickets)
+                result.AppendLine($"{t.Title}, Priority: {t.Priority}, Status: {t.Status}, Created by: {t.CreatedBy?.UserName}, Resolved: {t.IsResolved}");
 
             result.AppendLine("=== ASSIGNMENTS ===");
-            foreach (var a in uc.Assignements) result.AppendLine(a.ToString());
+            foreach (var a in uc.Assignements)
+                result.AppendLine($"Assigned to: {a.Support?.UserName}; {a.Ticket?.Title}; Assigned at: {a.AssignedAt:g}, Comment: {a.Comment}");
 
             return result.ToString();
         }
@@ -143,7 +147,9 @@ namespace User
                 uc.ITSupports.RemoveRange(uc.ITSupports);
                 uc.Tickets.RemoveRange(uc.Tickets);
                 uc.Assignements.RemoveRange(uc.Assignements);
+
                 uc.SaveChanges();
+                oam.objList.Clear();
             }
             catch (Exception ex)
             {

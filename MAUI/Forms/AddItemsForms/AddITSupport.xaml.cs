@@ -39,7 +39,6 @@ public partial class AddITSupport : ContentPage
 
             // Persist using the manager so EF tracks and saves changes
             obj.Add(newITSupport);
-            obj.Save();
 
             await DisplayAlert("Success", "IT Support added successfully.", "OK");
         }

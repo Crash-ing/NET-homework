@@ -2,6 +2,16 @@
 using Users;
 using User;
 using MAUI.Forms.AddItemsForms;
+using System.Linq;
+
+public class ItemGroup : List<object>
+{
+    public string Name { get; private set; }
+    public ItemGroup(string name, IEnumerable<object> items) : base(items)
+    {
+        Name = name;
+    }
+}
 
 public partial class ItemListPage : ContentPage
 {
@@ -13,8 +23,8 @@ public partial class ItemListPage : ContentPage
 		InitializeComponent();
         obj = AppData.Instance.oam;
         rf = obj;
-        cVList.ItemsSource = obj.objList;
-	}
+        cVList.ItemsSource = GetGroupedItems();
+    }
     
     private async void EditClicked(object sender, EventArgs e)
     {
@@ -51,7 +61,7 @@ public partial class ItemListPage : ContentPage
 
             rf.Remove(item);
             cVList.ItemsSource = null;
-            cVList.ItemsSource = obj.objList;
+            cVList.ItemsSource = GetGroupedItems();
         }
     }
 
@@ -62,6 +72,23 @@ public partial class ItemListPage : ContentPage
         rf = obj;
 
         cVList.ItemsSource = null;
-        cVList.ItemsSource = obj.objList;
+        cVList.ItemsSource = GetGroupedItems();
+    }
+
+    private List<ItemGroup> GetGroupedItems()
+    {
+        var allItems = obj.objList;
+
+        return new List<ItemGroup>
+        {
+            new ItemGroup("Assignments", allItems.OfType<Assignement>()),
+            new ItemGroup("Tickets", allItems.OfType<Ticket>()),
+            new ItemGroup("IT Support", allItems.OfType<ITSupport>())
+        };
+    }
+
+    private void ContentPage_NavigatedTo_1(object sender, NavigatedToEventArgs e)
+    {
+
     }
 }
